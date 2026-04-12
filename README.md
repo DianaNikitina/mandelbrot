@@ -1,49 +1,75 @@
-# mandelbrot
-SDL - graphic library
+# Mandelbrot
 
-Color
-<img width="389" height="249" alt="image" src="https://github.com/user-attachments/assets/fb35f35a-5b42-4c3b-b999-84ff1de70aa3" />
+Mandelbrot set visualization using **SDL2**.
 
-LockTexture 
-(give temporary buffer for write pixels)
-NULL - Lock all texture
-tex - address on texture
-&pixels - address on start array of pixels
-&pitch - len one str in bytes
-<img width="630" height="119" alt="image" src="https://github.com/user-attachments/assets/a1fec013-d410-4dc9-b4b2-41e1a6098a86" />
+## SDL graphics library
 
-AllocFormat
-<img width="1219" height="63" alt="image" src="https://github.com/user-attachments/assets/23025bc0-e459-4af8-b364-7d31d0380f3a" />
-creates and initializes a pixel format description structure
-inside - 1) size of pixel in bytes
-2)place bits R G B A
-3)mask for each channel
+### Color
 
-MapRGB
-<img width="1372" height="77" alt="image" src="https://github.com/user-attachments/assets/1e8a3bd3-99fe-4f3b-b0ad-957eb2c279f1" />
-format - address on SDL_PixelFormat
-r, g, b - value of channels (0, ... , 255)
+<img src="https://github.com/user-attachments/assets/fb35f35a-5b42-4c3b-b999-84ff1de70aa3" alt="Color example" width="420">
 
-FreeFormat
-<img width="520" height="63" alt="image" src="https://github.com/user-attachments/assets/d1ea75be-e95d-44d3-b412-7e3e51544724" />
-free memory 
+### `SDL_LockTexture`
 
+Gives a temporary buffer for writing pixels into the texture.
 
+- `NULL` — lock the whole texture
+- `tex` — pointer to the texture
+- `&pixels` — address of the beginning of the pixel buffer
+- `&pitch` — length of one row in bytes
 
+<img src="https://github.com/user-attachments/assets/a1fec013-d410-4dc9-b4b2-41e1a6098a86" alt="SDL_LockTexture" width="700">
 
+### `SDL_AllocFormat`
+
+Creates and initializes a pixel format description structure.
+
+It contains:
+- pixel size in bytes
+- bit positions of `R`, `G`, `B`, `A`
+- mask for each channel
+
+<img src="https://github.com/user-attachments/assets/23025bc0-e459-4af8-b364-7d31d0380f3a" alt="SDL_AllocFormat" width="900">
+
+### `SDL_MapRGB`
+
+Maps RGB channel values into a pixel value according to `SDL_PixelFormat`.
+
+- `format` — pointer to `SDL_PixelFormat`
+- `r`, `g`, `b` — channel values in range `0..255`
+
+<img src="https://github.com/user-attachments/assets/1e8a3bd3-99fe-4f3b-b0ad-957eb2c279f1" alt="SDL_MapRGB" width="900">
+
+### `SDL_FreeFormat`
+
+Frees the memory allocated for `SDL_PixelFormat`.
+
+<img src="https://github.com/user-attachments/assets/d1ea75be-e95d-44d3-b412-7e3e51544724" alt="SDL_FreeFormat" width="520">
+
+## Program flow
+
+```text
 main()
 |
---> reset_view()          — заполнить структуру Mandelbrot
+|--> reset_view()          — initialize Mandelbrot structure
 |
---> while(running)
-    |--> SDL_PollEvent()   — клавиши/мышь -> меняют view, dirty=1
-    |
-    |--> dirty? → render_frame()
-    |            --> для каждого пикселя:
-    |            |   mandelbrot_pixel() -> n
-    |            |   color_from_iter(n) -> цвет
-    |            --> записать цвет в текстуру
-    |
-    --> FPS = 1 / dt
-    │
-    --> SDL_RenderCopy() + render_ui() --> SDL_RenderPresent()
+|--> while (running)
+     |--> SDL_PollEvent()  — keyboard/mouse input changes view, dirty = 1
+     |
+     |--> dirty ? render_frame()
+     |            |--> for each pixel:
+     |            |    mandelbrot_pixel() -> n
+     |            |    color_from_iter(n) -> color
+     |            |--> write color into texture
+     |
+     |--> FPS = 1 / dt
+     |
+     |--> SDL_RenderCopy() + render_ui()
+     |--> SDL_RenderPresent()
+```
+
+## Notes
+
+- `pitch` is the size of one row in **bytes**
+- texture writing is done through `SDL_LockTexture`
+- colors are created with `SDL_MapRGB`
+- pixel format must be freed with `SDL_FreeFormat`
