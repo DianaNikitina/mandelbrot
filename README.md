@@ -1,7 +1,7 @@
 # mandelbrot
 SDL - graphic library
 
-Color/n
+Color
 <img width="389" height="249" alt="image" src="https://github.com/user-attachments/assets/fb35f35a-5b42-4c3b-b999-84ff1de70aa3" />
 
 LockTexture 
