@@ -4,6 +4,8 @@ Mandelbrot set visualization using **SDL2**.
 
 ## SDL graphics library
 
+<img width="809" height="638" alt="image" src="https://github.com/user-attachments/assets/ba8dd3e3-b421-414d-bb12-139589cb44e9" />
+
 ### Color
 
 <img src="https://github.com/user-attachments/assets/fb35f35a-5b42-4c3b-b999-84ff1de70aa3" alt="Color example" width="420">
