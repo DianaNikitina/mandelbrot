@@ -67,5 +67,6 @@ void start_view(Mandelbrot *v);
 int init_param();
 int create_param(Params *params);
 int destroy(Params *params);
+int click_processing(Params *params);
 
 #endif
