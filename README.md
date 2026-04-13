@@ -47,6 +47,25 @@ Frees the memory allocated for `SDL_PixelFormat`.
 
 <img src="https://github.com/user-attachments/assets/d1ea75be-e95d-44d3-b412-7e3e51544724" alt="SDL_FreeFormat" width="520">
 
+### `TTF_RenderUTF8_Blended`
+
+Allocate a new 32-bit, ARGB surface, using alpha blending to dither the font with the given color.
+
+<img width="600" height="78" alt="image" src="https://github.com/user-attachments/assets/41b03e79-7c36-4e73-9166-de27b2f39ce7" />
+
+
+## `SDL_Rect`
+
+Draw rectangle as a background for text (FPS, Scale, ROI).
+
+<img width="302" height="158" alt="image" src="https://github.com/user-attachments/assets/7ed1b417-cf00-457b-81ed-917107f69c15" />
+
+## `SDL_SetRenderDrawBlendMode`
+
+<img width="905" height="52" alt="image" src="https://github.com/user-attachments/assets/ccf709bd-759d-4739-842f-07607a40864f" />
+
+## `
+
 ## Program flow
 
 ```text
