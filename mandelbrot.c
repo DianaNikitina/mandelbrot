@@ -2,51 +2,11 @@
 
 int main(void)
 {
-    if (SDL_Init(SDL_INIT_VIDEO) < 0) 
-    {
-        fprintf(stderr, "SDL_Init: %s\n", SDL_GetError());
-        return 1;
-    }
-    if (TTF_Init() < 0) 
-    {
-        fprintf(stderr, "TTF_Init: %s\n", TTF_GetError());
-        SDL_Quit();
-        return 1;
-    }
+    Params params = {.window = NULL, .render = NULL, .texture = NULL, .font = NULL};
 
-    SDL_Window *win = SDL_CreateWindow(
-        "Mandelbrot — SDL2",
-        SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
-        WIN_W, WIN_H, SDL_WINDOW_SHOWN);
-    if (!win) { fprintf(stderr, "Window: %s\n", SDL_GetError()); return 1; }
+    init_param();
 
-    SDL_Renderer *rend = SDL_CreateRenderer(
-        win, -1,
-        SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
-    if (!rend) { fprintf(stderr, "Renderer: %s\n", SDL_GetError()); return 1; }
-
-    SDL_Texture *tex = SDL_CreateTexture(
-        rend,
-        SDL_PIXELFORMAT_ARGB8888,
-        SDL_TEXTUREACCESS_STREAMING,
-        WIN_W, WIN_H);
-    if (!tex) { fprintf(stderr, "Texture: %s\n", SDL_GetError()); return 1; }
-
-    /* ищем системный шрифт для FPS-оверлея */
-    TTF_Font *font = NULL;
-    const char *font_paths[] = {
-        "/usr/share/fonts/truetype/dejavu/DejaVuSansMono.ttf",
-        "/usr/share/fonts/TTF/DejaVuSansMono.ttf",
-        "/usr/share/fonts/truetype/liberation/LiberationMono-Regular.ttf",
-        "/System/Library/Fonts/Menlo.ttc",
-        NULL
-    };
-    for (int i = 0; font_paths[i]; i++) {
-        font = TTF_OpenFont(font_paths[i], 16);
-        if (font) break;
-    }
-    if (!font)
-        fprintf(stderr, "Warning: no font found, FPS overlay disabled\n");
+    create_param(&params);
 
     Mandelbrot view;
     start_view(&view);
@@ -126,7 +86,7 @@ int main(void)
                 break;
 
             case SDL_MOUSEWHEEL: {
-                int mx, my;
+                int mx = 0, my = 0;
                 SDL_GetMouseState(&mx, &my);
                 float factor = (ev.wheel.y > 0)
                     ? ZOOM_FACTOR : (1.0f / ZOOM_FACTOR);
@@ -150,7 +110,7 @@ int main(void)
 
      
         if (view.dirty) {
-            draw_frame(tex, &view);
+            draw_frame(params.texture, &view);
             view.dirty = 0;
         }
 
@@ -160,17 +120,12 @@ int main(void)
         prev = now;
         fps  = (dt > 0.0) ? 1.0 / dt : 0.0;
 
-        SDL_RenderClear(rend);
-        SDL_RenderCopy(rend, tex, NULL, NULL);
-        render_ui(rend, font, fps, &view);
-        SDL_RenderPresent(rend);
+        SDL_RenderClear(params.render);
+        SDL_RenderCopy(params.render, params.texture, NULL, NULL);
+        draw_text(params.render, params.font, fps, &view);
+        SDL_RenderPresent(params.render);
     }
 
-    if (font) TTF_CloseFont(font);
-    SDL_DestroyTexture(tex);
-    SDL_DestroyRenderer(rend);
-    SDL_DestroyWindow(win);
-    TTF_Quit();
-    SDL_Quit();
+    destroy(&params);
     return 0;
 }

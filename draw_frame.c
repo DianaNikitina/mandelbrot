@@ -17,7 +17,7 @@ void draw_frame(SDL_Texture *tex, const Mandelbrot *v)
         {
             int n = mandelbrot_pixel(px, py, v);
             SDL_Color c = color_from_iter(n);
-            pix[py * stride + px] = SDL_MapRGB(fmt, c.r, c.g, c.b);
+            pix[py * len_str + px] = SDL_MapRGB(fmt, c.r, c.g, c.b);
         }
     }
 

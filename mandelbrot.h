@@ -49,10 +49,23 @@ typedef struct
     int   dirty;            //flag drawing frame
 } Mandelbrot;
 
+typedef struct 
+{
+    SDL_Window *window;
+    SDL_Renderer *render;
+    SDL_Texture *texture;
+    TTF_Font *font;
+
+} Params;
+
+
 int mandelbrot_pixel(int px, int py, const Mandelbrot *v);
 SDL_Color color_from_iter(int n);
 void draw_frame(SDL_Texture *tex, const Mandelbrot *v);
-void render_ui(SDL_Renderer *rend, TTF_Font *font, double fps, const Mandelbrot *v);
+void draw_text(SDL_Renderer *rend, TTF_Font *font, double fps, const Mandelbrot *v);
 void start_view(Mandelbrot *v);
+int init_param();
+int create_param(Params *params);
+int destroy(Params *params);
 
 #endif
