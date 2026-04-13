@@ -59,14 +59,15 @@ typedef struct
 } Params;
 
 
-int mandelbrot_pixel(int px, int py, const Mandelbrot *v);
+
 SDL_Color color_from_iter(int n);
-void draw_frame(SDL_Texture *tex, const Mandelbrot *v);
+void draw_frame(SDL_Texture *tex);
 void draw_text(SDL_Renderer *rend, TTF_Font *font, double fps, const Mandelbrot *v);
 void start_view(Mandelbrot *v);
-int init_param();
+int grafic_init();
 int create_param(Params *params);
 int destroy(Params *params);
 int click_processing(Params *params);
+void mandelbrot_4pixels(int start_px, int py, int results[4]);
 
 #endif

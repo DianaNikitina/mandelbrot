@@ -2,28 +2,44 @@
 
 //return number of iterations 
 
-int mandelbrot_pixel(int px, int py, const Mandelbrot *v)
+
+void mandelbrot_4pixels(int start_px, int py, int results[4])
 {
-    float dx = BASE_DX * v->scale;          //size pixel with zoom
-    float dy = BASE_DY * v->scale;
-
-
-    //pixel -> c-plane
-    float x0 = ((float)px - WIN_H / 2.0f) * dx + v->roi_x;
-    float y0 = ((float)py - WIN_W / 2.0f) * dy + v->roi_y;
-
-    float x = x0, y = y0;
-    int n = 0;
-
-    for (n = 0; n < N_MAX; n++) 
-    {
-        float x2 = x * x;
-        float y2 = y * y;
-        float xy = x * y;
-        float r2 = x2 + y2;
-        if (r2 >= R2_MAX) break;        //if not in plane -> break
-        x = x2 - y2 + x0;               // Re(z^2 + c)
-        y = xy + xy  + y0;              //IM(z^2 + c)
+    Mandelbrot *view = {0};
+    float dx = BASE_DX * view->scale;       
+    float dy = BASE_DY * view->scale;
+    float x0[4] = {0}, y0[4] = {0};
+    
+    
+    float y0_val = ((float)py - WIN_H/2.0f) * dy + view->roi_y;
+    y0[0] = y0_val;
+    y0[1] = y0_val;
+    y0[2] = y0_val;
+    y0[3] = y0_val;
+    
+    for (int i = 0; i < 4; i++) {
+        x0[i] = ((float)(start_px + i) - WIN_W/2.0f) * dx + view->roi_x;
     }
-    return n;
+    
+    float x[4] = {x0[0], x0[1], x0[2], x0[3]};
+    float y[4] = {y0[0], y0[1], y0[2], y0[3]};
+    
+    results[0] = results[1] = results[2] = results[3] = 0;
+    
+    for (int iter = 0; iter < N_MAX; iter++) {
+        int any_active = 0;
+        
+        for (int i = 0; i < 4; i++) {
+            float r2 = x[i]*x[i] + y[i]*y[i];
+            if (r2 < R2_MAX) {
+                any_active = 1;
+                float old_x = x[i];
+                x[i] = x[i]*x[i] - y[i]*y[i] + x0[i];
+                y[i] = 2 * old_x * y[i] + y0[i];
+                results[i]++;
+            }
+        }
+        
+        if (!any_active) break;
+    }
 }

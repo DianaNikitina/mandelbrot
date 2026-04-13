@@ -79,7 +79,7 @@ int click_processing(Params *params)
      
         if (view.dirty) 
         {
-            draw_frame(params->texture, &view);
+            draw_frame(params->texture);
             view.dirty = 0;
         }
 

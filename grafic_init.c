@@ -1,6 +1,6 @@
 #include "mandelbrot.h"
 
-int init_param()
+int grafic_init()
 {
     if (SDL_Init(SDL_INIT_VIDEO) < 0) 
     {

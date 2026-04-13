@@ -1,6 +1,6 @@
 #include "mandelbrot.h"
 
-void draw_frame(SDL_Texture *tex, const Mandelbrot *v)
+void draw_frame(SDL_Texture *tex)
 {
     void *pixels = 0;
     int pitch = 0;
@@ -13,11 +13,16 @@ void draw_frame(SDL_Texture *tex, const Mandelbrot *v)
 
     for (int py = 0; py < WIN_H; py++) 
     {
-        for (int px = 0; px < WIN_W; px++) 
+        for (int px = 0; px < WIN_W; px += 4) 
         {
-            int n = mandelbrot_pixel(px, py, v);
-            SDL_Color c = color_from_iter(n);
-            pix[py * len_str + px] = SDL_MapRGB(fmt, c.r, c.g, c.b);
+            int iterations[4];
+            mandelbrot_4pixels(px, py, iterations);
+            
+            for (int i = 0; i < 4 && (px + i) < WIN_W; i++) 
+            {
+                SDL_Color c = color_from_iter(iterations[i]);
+                pix[py * len_str + (px + i)] = SDL_MapRGB(fmt, c.r, c.g, c.b);
+            }
         }
     }
 

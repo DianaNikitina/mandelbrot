@@ -1,10 +1,10 @@
 #include "mandelbrot.h"
 
-int main(void)
+int main()
 {
     Params params = {.window = NULL, .render = NULL, .texture = NULL, .font = NULL};
 
-    init_param();
+    grafic_init();
 
     create_param(&params);
 
