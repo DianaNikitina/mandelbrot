@@ -6,7 +6,7 @@ int main()
 
     grafic_init();
 
-    create_param(&params);
+    grafic_create(&params);
 
     click_processing(&params);
 

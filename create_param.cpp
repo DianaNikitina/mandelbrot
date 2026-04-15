@@ -1,6 +1,6 @@
 #include "mandelbrot.h"
 
-int create_param(Params *params)
+int grafic_create(Params *params)
 {
     SDL_Window *window = params->window;
     SDL_Renderer *render = params->render;

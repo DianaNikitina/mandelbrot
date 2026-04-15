@@ -26,12 +26,13 @@ int click_processing(Params *params)
             case SDL_KEYDOWN: 
             {
                 SDL_Keycode key = event.key.keysym.sym;
-                SDL_Keymod  mod = event.key.keysym.mod;
+                SDL_Keymod  mod = (SDL_Keymod)event.key.keysym.mod;
 
                 int shift = (mod & KMOD_SHIFT) != 0;
                 float step = shift ? MOVE_STEP_FAST : MOVE_STEP;
 
-                switch (key) {
+                switch (key) 
+                {
                 case SDLK_ESCAPE:
                 case SDLK_q:
                     running = 0;
@@ -70,16 +71,21 @@ int click_processing(Params *params)
                     view.dirty = 1;
                     break;
                 }
-                }
-                break;
+                
+                default:
+                    break;
             }
+            }
+
+                default:
+                    break;
             }
         }
 
      
         if (view.dirty) 
         {
-            draw_frame(params->texture);
+            draw_frame(&view, params->texture);
             view.dirty = 0;
         }
 

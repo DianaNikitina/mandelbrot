@@ -3,9 +3,8 @@
 //return number of iterations 
 
 
-void mandelbrot_4pixels(int start_px, int py, int results[4])
+void mandelbrot_pixels(const Mandelbrot *view, int start_px, int py, int results[4])
 {
-    Mandelbrot *view = {0};
     float dx = BASE_DX * view->scale;       
     float dy = BASE_DY * view->scale;
     float x0[4] = {0}, y0[4] = {0};
