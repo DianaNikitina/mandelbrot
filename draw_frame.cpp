@@ -16,7 +16,7 @@ void draw_frame(const Mandelbrot *view, SDL_Texture *tex)
         for (int px = 0; px < WIN_W; px += 4) 
         {
             int iterations[4];
-            mandelbrot_4pixels(view, px, py, iterations);
+            mandelbrot_intrince(view, px, py, iterations);
             
             for (int i = 0; i < 4 && (px + i) < WIN_W; i++) 
             {
