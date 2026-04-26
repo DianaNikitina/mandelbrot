@@ -1,9 +1,10 @@
 #include "mandelbrot.h"
+# ifdef DEBUG_INTRINSIC
 
 //return number of iterations
 
 
-void mandelbrot_intrince(const Mandelbrot *view, int start_px, int py, int results[4])
+void mandelbrot_intrinsic(const Mandelbrot *view, int start_px, int py, int results[4])
 {
     float dx = BASE_DX * view->scale;       
     float dy = BASE_DY * view->scale;
@@ -26,7 +27,6 @@ void mandelbrot_intrince(const Mandelbrot *view, int start_px, int py, int resul
     x0 = _mm_mul_ps(x0, arr_dx);                    
     x0 = _mm_add_ps(x0, roi_x);  
 
-    
     __m128 x = x0;
     __m128 y = y0;
     __m128 r2 = _mm_setzero_ps();
@@ -51,7 +51,6 @@ void mandelbrot_intrince(const Mandelbrot *view, int start_px, int py, int resul
         __m128i mask_i = _mm_castps_si128(mask_ps);
         iter_vec = _mm_sub_epi32(iter_vec, mask_i);
 
-
         __m128 xy = _mm_mul_ps(old_x, old_y);
         __m128 x2 = xx;
         __m128 y2 = yy;
@@ -71,10 +70,12 @@ void mandelbrot_intrince(const Mandelbrot *view, int start_px, int py, int resul
     }
 
     alignas(16) int iters[4];
-    _mm_store_si128((__m128i*)iters, iter_vec);
+    _mm_store_si128((__m128i*)iters, iter_vec); // TODO: unaligned store
 
     results[0] = iters[0];
     results[1] = iters[1];
     results[2] = iters[2];
     results[3] = iters[3];
 }
+
+#endif

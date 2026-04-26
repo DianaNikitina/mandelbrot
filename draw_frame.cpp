@@ -4,6 +4,7 @@ void draw_frame(const Mandelbrot *view, SDL_Texture *tex)
 {
     void *pixels = 0;
     int pitch = 0;
+    
     SDL_LockTexture(tex, NULL, &pixels, &pitch);
 
     Uint32 *pix = (Uint32 *)pixels;   //1 pixel - 4 bytes
@@ -15,8 +16,8 @@ void draw_frame(const Mandelbrot *view, SDL_Texture *tex)
     {
         for (int px = 0; px < WIN_W; px += 4) 
         {
-            int iterations[4];
-            mandelbrot_intrince(view, px, py, iterations);
+            int iterations[4] = {};
+            mandelbrot_intrinsic(view, px, py, iterations);
             
             for (int i = 0; i < 4 && (px + i) < WIN_W; i++) 
             {

@@ -1,5 +1,8 @@
 #ifndef MANDELBROT_H_INCLUDED
 #define MANDELBROT_H_INCLUDED
+#define DEBUG_INTRINSIC
+
+// вывод fps
 
 //======================================
 /**
@@ -69,8 +72,7 @@ int grafic_init();
 int grafic_create(Params *params);
 int destroy(Params *params);
 int click_processing(Params *params);
-//void mandelbrot_4pixels(const Mandelbrot *view, int start_px, int py, int results[4]);
-void mandelbrot_intrince(const Mandelbrot *view, int start_px, int py, int results[4]);
+void mandelbrot_intrinsic(const Mandelbrot *view, int start_px, int py, int results[4]);
 int mm_movemask_ps (const float cmp[4]);
 
 void mm_cmp_le_ps (float cmp[4], const float mm1[4], const float mm2[4]);
