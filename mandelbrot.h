@@ -22,6 +22,7 @@ pixel (px, py) -> c = x_0 +i*y_0
 #include <math.h>
 #include <stdio.h>
 #include <emmintrin.h>
+#include <time.h>
 
 //======================================
 //param of window
@@ -72,7 +73,11 @@ int grafic_init();
 int grafic_create(Params *params);
 int destroy(Params *params);
 int click_processing(Params *params);
+#ifdef DEBUG_PIXEL
+int mandelbrot_intrinsic(int px, int py, const Mandelbrot *v);
+#else
 void mandelbrot_intrinsic(const Mandelbrot *view, int start_px, int py, int results[4]);
+#endif
 int mm_movemask_ps (const float cmp[4]);
 
 void mm_cmp_le_ps (float cmp[4], const float mm1[4], const float mm2[4]);

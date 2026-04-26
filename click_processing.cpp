@@ -61,11 +61,11 @@ int click_processing(Params *params)
 
                 case SDLK_z: 
                 {
-                    float factor;
+                    float factor = 0;
                     if (shift)
-                        factor = 1.0f / ZOOM_FACTOR;
-                    else
                         factor = ZOOM_FACTOR;
+                    else
+                        factor = 1.0f / ZOOM_FACTOR;
 
                     view.scale *= factor;
                     view.dirty = 1;

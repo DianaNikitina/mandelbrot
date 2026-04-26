@@ -1,5 +1,5 @@
 #include "mandelbrot.h"
-#ifdef GEBUG_4_PIXELS_FUNC
+#ifdef DEBUG_4_PIXELS_FUNC
 
 //return number of iterations
 

@@ -8,6 +8,7 @@ g++ -D _DEBUG -ggdb3 -std=c++17 -O0 -Wall -g -Wextra -Weffc++ -Waggressive-loop-
  -Wno-missing-field-initializers -Wno-narrowing -Wno-old-style-cast -Wno-varargs -Wstack-protector -fcheck-new \
  -fsized-deallocation -fstack-protector -fstrict-overflow -flto-odr-type-merging \
  -fno-omit-frame-pointer -Wlarger-than=8192 -Wstack-usage=8192 -pie -fPIE -Werror=vla -mavx2 -mavx \
- mandelbrot.cpp mandelbrot_intrinsic.cpp mandelbrot_4pixels_func.cpp mandelbrot_4pixels.cpp draw_frame.cpp \
+ mandelbrot.cpp mandelbrot_intrinsic.cpp mandelbrot_4pixels_func.cpp mandelbrot_4pixels.cpp mandelbrot_pixel.cpp draw_frame.cpp \
  start_view.cpp grafic_init.cpp draw_text.cpp click_processing.cpp destroy.cpp create_param.cpp\
  sdl_color.cpp intrinsic.cpp $(sdl2-config --cflags --libs) -lSDL2_ttf -O3 -o run
+

@@ -69,13 +69,8 @@ void mandelbrot_intrinsic(const Mandelbrot *view, int start_px, int py, int resu
         y = _mm_or_ps(y_alive, y_dead);
     }
 
-    alignas(16) int iters[4];
-    _mm_store_si128((__m128i*)iters, iter_vec); // TODO: unaligned store
+    _mm_storeu_si128((__m128i*)results, iter_vec); // TODO: unaligned store
 
-    results[0] = iters[0];
-    results[1] = iters[1];
-    results[2] = iters[2];
-    results[3] = iters[3];
 }
 
 #endif

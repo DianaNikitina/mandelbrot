@@ -5,6 +5,8 @@ void draw_frame(const Mandelbrot *view, SDL_Texture *tex)
     void *pixels = 0;
     int pitch = 0;
     
+    Uint64 start = SDL_GetPerformanceCounter();
+    
     SDL_LockTexture(tex, NULL, &pixels, &pitch);
 
     Uint32 *pix = (Uint32 *)pixels;   //1 pixel - 4 bytes
@@ -14,6 +16,15 @@ void draw_frame(const Mandelbrot *view, SDL_Texture *tex)
 
     for (int py = 0; py < WIN_H; py++) 
     {
+        #ifdef DEBUG_PIXEL
+        for (int px = 0; px < WIN_W; px++) 
+        {
+
+            int n = mandelbrot_intrinsic(px, py, view);
+            SDL_Color c = color_from_iter(n);
+            pix[py * len_str + px] = SDL_MapRGB(fmt, c.r, c.g, c.b);
+        }
+        #else 
         for (int px = 0; px < WIN_W; px += 4) 
         {
             int iterations[4] = {};
@@ -25,8 +36,14 @@ void draw_frame(const Mandelbrot *view, SDL_Texture *tex)
                 pix[py * len_str + (px + i)] = SDL_MapRGB(fmt, c.r, c.g, c.b);
             }
         }
+        #endif
     }
+
 
     SDL_FreeFormat(fmt);
     SDL_UnlockTexture(tex);
+
+    Uint64 end = SDL_GetPerformanceCounter();
+    double delta = (double)(end - start) / (double)SDL_GetPerformanceFrequency();
+    printf("draw_frame time: %.9f sec\n", delta);
 }
