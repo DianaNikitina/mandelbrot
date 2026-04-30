@@ -1,9 +1,12 @@
 #ifndef MANDELBROT_H_INCLUDED
 #define MANDELBROT_H_INCLUDED
-#define DEBUG_INTRINSIC
+#define DEBUG_PIXEL
 
-// вывод fps
 
+// 0.08 - intrince 
+// 0.41 - func 
+// 0.10 - 4 pixel
+// 0.28 - pixel
 //======================================
 /**
 ∀ P_0 (pixel)
